@@ -80,13 +80,18 @@ function swapAndReload() {
 
 function cacheNote() {
   if (!cacheEl) return;
-  if (!appCache) { cacheEl.textContent = ""; return; }
-  var text = "";
+  if (!appCache) {
+    cacheEl.textContent = "CACHE : AppCache indisponible";
+    return;
+  }
+  var text = "CACHE : état inconnu";
   try {
-    if (appCache.status === appCache.CHECKING) text = "checking for updates";
-    else if (appCache.status === appCache.DOWNLOADING) text = "loading files - hold on";
-    else if (appCache.status === appCache.UPDATEREADY) text = "newer version cached - reloading";
-    else if (appCache.status === appCache.OBSOLETE) text = "the cache was dropped - the server answers directly";
+    if (appCache.status === appCache.UNCACHED) text = "CACHE : pas encore installé";
+    else if (appCache.status === appCache.IDLE) text = "CACHE : prêt hors ligne";
+    else if (appCache.status === appCache.CHECKING) text = "CACHE : vérification...";
+    else if (appCache.status === appCache.DOWNLOADING) text = "CACHE : téléchargement...";
+    else if (appCache.status === appCache.UPDATEREADY) text = "CACHE : mise à jour prête";
+    else if (appCache.status === appCache.OBSOLETE) text = "CACHE : indisponible (serveur direct)";
   } catch (e) {}
   cacheEl.textContent = text;
 }
@@ -96,9 +101,9 @@ function cacheChanged(ev) {
     var loaded = Number(ev.loaded) || 0;
     var total = Number(ev.total) || 0;
     if (total > 0) {
-      cacheEl.textContent = "loading files - " + Math.min(100, Math.round(loaded / total * 100)) + "%";
+      cacheEl.textContent = "CACHE : téléchargement " + Math.min(100, Math.round(loaded / total * 100)) + "%";
     } else {
-      cacheEl.textContent = "loading files - " + loaded + " files";
+      cacheEl.textContent = "CACHE : " + loaded + " fichiers téléchargés";
     }
   } else {
     cacheNote();
