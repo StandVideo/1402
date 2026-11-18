@@ -8,7 +8,7 @@ var TARGET = {
   goldhen: "log=1&afterglow=run&mode=goldhen",
 };
 
-var AUTOSTART_SECONDS = 7;
+var AUTOSTART_SECONDS = 10;
 var STORE_KEY = "afterglow.choice";
 
 var form = document.getElementById("pick");
