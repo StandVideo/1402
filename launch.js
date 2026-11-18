@@ -81,17 +81,17 @@ function swapAndReload() {
 function cacheNote() {
   if (!cacheEl) return;
   if (!appCache) {
-    cacheEl.textContent = "CACHE : AppCache indisponible";
+    cacheEl.textContent = "CACHE: AppCache unavailable";
     return;
   }
-  var text = "CACHE : état inconnu";
+  var text = "CACHE: Status unknown";
   try {
-    if (appCache.status === appCache.UNCACHED) text = "CACHE : pas encore installé";
-    else if (appCache.status === appCache.IDLE) text = "CACHE : prêt hors ligne";
-    else if (appCache.status === appCache.CHECKING) text = "CACHE : vérification...";
-    else if (appCache.status === appCache.DOWNLOADING) text = "CACHE : téléchargement...";
-    else if (appCache.status === appCache.UPDATEREADY) text = "CACHE : mise à jour prête";
-    else if (appCache.status === appCache.OBSOLETE) text = "CACHE : indisponible (serveur direct)";
+    if (appCache.status === appCache.UNCACHED) text = "CACHE: Not installed";
+    else if (appCache.status === appCache.IDLE) text = "CACHE: Ready offline";
+    else if (appCache.status === appCache.CHECKING) text = "CACHE: Checking...";
+    else if (appCache.status === appCache.DOWNLOADING) text = "CACHE: Downloading...";
+    else if (appCache.status === appCache.UPDATEREADY) text = "CACHE: Update ready";
+    else if (appCache.status === appCache.OBSOLETE) text = "CACHE: Unavailable (server only)";
   } catch (e) {}
   cacheEl.textContent = text;
 }
@@ -101,9 +101,9 @@ function cacheChanged(ev) {
     var loaded = Number(ev.loaded) || 0;
     var total = Number(ev.total) || 0;
     if (total > 0) {
-      cacheEl.textContent = "CACHE : téléchargement " + Math.min(100, Math.round(loaded / total * 100)) + "%";
+cacheEl.textContent = "CACHE: Downloading " + Math.min(100, Math.round(loaded / total * 100)) + "%";
     } else {
-      cacheEl.textContent = "CACHE : " + loaded + " fichiers téléchargés";
+cacheEl.textContent = "CACHE: " + loaded + " files downloaded";
     }
   } else {
     cacheNote();
@@ -180,14 +180,17 @@ function start() {
   /* Not a refusal -- a bounded wait, and offline none at all. */
   if (!offline() && cacheBusy()) {
     waitingForCache = true;
-    countEl.textContent = "waiting for the cache";
+   countEl.textContent = "Waiting for the cache";
     cacheNote();
-    if (cacheTimer === null) {
-      cacheTimer = setTimeout(function () {
-        cacheTimer = null;
-        if (!gone) { countEl.textContent = "cache did not answer - going anyway"; go(); }
-      }, CACHE_WAIT_MS);
+if (cacheTimer === null) {
+  cacheTimer = setTimeout(function () {
+    cacheTimer = null;
+    if (!gone) {
+      countEl.textContent = "Cache did not respond - continuing anyway";
+      go();
     }
+  }, CACHE_WAIT_MS);
+}
     return;
   }
   go();
