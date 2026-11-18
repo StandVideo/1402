@@ -91,8 +91,18 @@ function cacheNote() {
   cacheEl.textContent = text;
 }
 
-function cacheChanged() {
-  cacheNote();
+function cacheChanged(ev) {
+  if (ev && ev.type === "progress" && cacheEl) {
+    var loaded = Number(ev.loaded) || 0;
+    var total = Number(ev.total) || 0;
+    if (total > 0) {
+      cacheEl.textContent = "loading files - " + Math.min(100, Math.round(loaded / total * 100)) + "%";
+    } else {
+      cacheEl.textContent = "loading files - " + loaded + " files";
+    }
+  } else {
+    cacheNote();
+  }
   /* A newer build is on disk. Take it before anything starts. */
   try {
     if (appCache && appCache.status === appCache.UPDATEREADY) {

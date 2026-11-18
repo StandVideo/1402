@@ -40,7 +40,7 @@ off again with nobody watching.
 | `afterglow.js` | this work |
 | `jb.js`, `ps4_offsets.js` | the raw13g host, trimmed |
 | `core.js`, `mem.js`, `int64.js` | the in-process primitive, by way of that host |
-| `index.html`, `jb.html`, `launch.js`, `style.css`, `meme.png` | the landing page and the run page |
+| `index.html`, `jb.html`, `launch.js`, `style.css`, `img/BG.jpg` | the landing page and the run page |
 | `serve.sh` | the local server, with the headers this needs |
 | `cache.appcache`, `make-manifest.sh` | the offline cache and the script that rebuilds it |
 
